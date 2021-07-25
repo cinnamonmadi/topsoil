@@ -30,8 +30,10 @@ func _physics_process(_delta):
             target = null
         if target != null and move_timer.is_stopped():
             handle_colliders()
-
-    set_target()
+    while target == null and not path.empty():
+        try_set_target()
+    if target == null:
+        set_collision_layer_bit(0, true)
 
 func move():
     velocity = position.direction_to(target) * SPEED
@@ -68,13 +70,13 @@ func navigate_to(destination):
     target = null
     path = nav.get_simple_path(position, destination, false)
 
-func set_target():
-    while target == null and not path.empty():
-        var next_node = path[0]
-        path.remove(0)
-        if position.distance_to(next_node) > 9:
-            move_timer.stop()
-            target = next_node
+func try_set_target():
+    var next_node = path[0]
+    path.remove(0)
+    if position.distance_to(next_node) > 9:
+        target = next_node
+        move_timer.stop()
+        set_collision_layer_bit(0, false)
 
 func _on_move_timeout():
     if (stuck_position != null and position.distance_to(stuck_position) < 1) or stuck_position == null:
