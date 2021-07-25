@@ -74,7 +74,12 @@ func handle_input():
         var global_mouse_pos = get_global_mouse_position()
         for unit in selected:
             if unit.get_ref():
-                unit.get_ref().navigate_to(global_mouse_pos)
+                unit.get_ref().command_move(global_mouse_pos)
+    elif Input.is_action_just_pressed("attack_move"):
+        var global_mouse_pos = get_global_mouse_position()
+        for unit in selected:
+            if unit.get_ref():
+                unit.get_ref().command_attack_move(global_mouse_pos)
 
 func select_begin():
     selecting = true
@@ -103,7 +108,7 @@ func select_end():
     select_query.transform = Transform2D(0, select_start + position + select_rect.extents)
     var query_results = get_world_2d().direct_space_state.intersect_shape(select_query, 100)
     for result in query_results:
-        if result.collider.is_in_group("units"):
+        if result.collider.is_in_group("units") and result.collider.team == 0:
             selected.append(weakref(result.collider))
 
     for unit in selected:

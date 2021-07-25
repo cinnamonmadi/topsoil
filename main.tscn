@@ -114,3 +114,15 @@ position = Vector2( 96, 96 )
 
 [node name="tomato4" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 64, 64 )
+
+[node name="tomato5" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 384, 192 )
+team = 1
+
+[node name="tomato6" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 448, 224 )
+team = 1
+
+[node name="tomato7" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 416, 128 )
+team = 1
