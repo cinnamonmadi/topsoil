@@ -14,14 +14,14 @@ const MIN_TARGET_DISTANCE = 8
 const NODE_RESET_THRESHOLD = 16
 const ATTACK_RANGE = 200
 
-onready var nav = get_viewport().get_node("world/nav")
+onready var nav = get_parent().get_parent().get_node("nav")
 onready var rays = $rays
 onready var ray_front = $rays/ray0
 onready var stop_timer = $stop_timer
 onready var sprite = $sprite
 onready var select_ring = $select_ring
 
-export var team = 0
+export var team = 1
 
 var state = STATE_IDLE
 

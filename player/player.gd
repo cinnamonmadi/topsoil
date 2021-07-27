@@ -1,7 +1,7 @@
 extends Camera2D
 
 onready var image_cursor = load("res://player/cursor.png")
-onready var map = get_viewport().get_node("world/nav/map")
+onready var map = get_parent().get_node("nav/map")
 onready var parent = get_parent()
 
 const TILE_SIZE = 32
@@ -23,6 +23,8 @@ var max_position
 var selecting = false
 var select_start = Vector2.ZERO
 var selected = []
+var self_id = 0
+var opponent_id = -1
 
 func _ready():
     current = true
@@ -108,7 +110,7 @@ func select_end():
     select_query.transform = Transform2D(0, select_start + position + select_rect.extents)
     var query_results = get_world_2d().direct_space_state.intersect_shape(select_query, 100)
     for result in query_results:
-        if result.collider.is_in_group("units") and result.collider.team == 0:
+        if result.collider.is_in_group("units") and result.collider.team == self_id:
             selected.append(weakref(result.collider))
 
     for unit in selected:
